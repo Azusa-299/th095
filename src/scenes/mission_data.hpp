@@ -1,0 +1,115 @@
+#pragma once
+#include <array>
+
+namespace th95::scene {
+// Retail JP 1.02a: off_retail routine, dword_retail routine. IDs leave two slots per
+// ordinary level unused; they are not consecutive card indices.
+inline constexpr std::array<int,12> kMissionCounts{{6,6,8,9,8,8,8,8,8,8,8,8}};
+struct MissionDefinition {int id, caption, shots, background;};
+inline constexpr MissionDefinition kMissionDefinitions[] = {
+    {0, 1, 3, 0},
+    {1, 2, 3, 0},
+    {2, 1, 5, 0},
+    {3, 2, 4, 0},
+    {4, 1, 5, 0},
+    {5, 2, 5, 0},
+    {10, 3, 5, 0},
+    {11, 4, 4, 0},
+    {12, 3, 5, 0},
+    {13, 4, 4, 0},
+    {14, 3, 5, 0},
+    {15, 4, 5, 0},
+    {20, 6, 5, 1},
+    {21, 5, 5, 1},
+    {22, 6, 5, 1},
+    {23, 5, 6, 1},
+    {24, 6, 5, 1},
+    {25, 5, 7, 1},
+    {26, 6, 5, 1},
+    {27, 5, 4, 1},
+    {30, 7, 4, 1},
+    {31, 9, 6, 1},
+    {32, 8, 5, 1},
+    {33, 7, 6, 1},
+    {34, 9, 5, 1},
+    {35, 7, 6, 1},
+    {36, 9, 6, 1},
+    {37, 8, 6, 1},
+    {38, 7, 5, 1},
+    {40, 10, 5, 1},
+    {41, 11, 5, 1},
+    {42, 10, 5, 1},
+    {43, 11, 5, 1},
+    {44, 10, 6, 1},
+    {45, 11, 5, 1},
+    {46, 10, 7, 1},
+    {47, 11, 6, 1},
+    {50, 12, 8, 2},
+    {51, 13, 4, 2},
+    {52, 12, 5, 2},
+    {53, 13, 3, 2},
+    {54, 12, 7, 2},
+    {55, 13, 5, 2},
+    {56, 12, 5, 2},
+    {57, 13, 5, 2},
+    {60, 14, 9, 2},
+    {61, 15, 3, 2},
+    {62, 14, 5, 2},
+    {63, 15, 7, 2},
+    {64, 14, 6, 2},
+    {65, 15, 7, 2},
+    {66, 14, 5, 2},
+    {67, 15, 7, 2},
+    {70, 16, 6, 3},
+    {71, 17, 7, 3},
+    {72, 16, 6, 3},
+    {73, 17, 7, 3},
+    {74, 16, 7, 3},
+    {75, 17, 10, 3},
+    {76, 16, 8, 3},
+    {77, 17, 4, 3},
+    {80, 18, 6, 3},
+    {81, 19, 6, 3},
+    {82, 18, 7, 3},
+    {83, 19, 6, 3},
+    {84, 18, 6, 3},
+    {85, 19, 7, 3},
+    {86, 18, 8, 3},
+    {87, 19, 7, 3},
+    {90, 20, 8, 3},
+    {91, 21, 6, 3},
+    {92, 20, 6, 3},
+    {93, 21, 10, 3},
+    {94, 20, 7, 3},
+    {95, 21, 6, 3},
+    {96, 20, 6, 3},
+    {97, 21, 9, 4},
+    {100, 22, 6, 2},
+    {101, 22, 6, 2},
+    {102, 23, 5, 2},
+    {103, 23, 6, 2},
+    {104, 24, 10, 2},
+    {105, 24, 5, 2},
+    {106, 25, 3, 2},
+    {107, 25, 10, 2},
+    {110, 22, 6, 2},
+    {111, 22, 6, 2},
+    {112, 23, 5, 2},
+    {113, 23, 6, 2},
+    {114, 24, 10, 2},
+    {115, 24, 5, 2},
+    {116, 25, 3, 2},
+    {117, 25, 10, 2},
+};
+
+// Retail initialises the photo requirement from this table before the scene's
+// ECL runs; ECL opcode 141 then restates the same value. Matching the table up
+// front keeps the leaf marks and HUD correct on the first frame.
+inline int missionShots(int id)
+{
+    for (const auto &definition : kMissionDefinitions) {
+        if (definition.id == id) return definition.shots;
+    }
+    return 5;
+}
+}

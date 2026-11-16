@@ -1,0 +1,13 @@
+build
+temp
+diff
+*.obj
+*.exe
+resources/original.ico
+log.txt
+scripts/dls
+scripts/prefix
+build.ninja
+__pycache__
+reccmp-user.yml
+reccmp-build.yml
